@@ -18,7 +18,9 @@ from firebase_admin import db
 
 class LinkParser(HTMLParser):
 
-	links = []
+	def __init__(self):
+		HTMLParser.__init__(self)
+		self.links = list()
 
 	def handle_starttag(self, tag, attrs):
 	# Only parse the 'anchor' tag.
@@ -46,7 +48,7 @@ def normalize_found_link(link, source_url):
 		return domain + '/' + link
 	if link[0:3] == 'www':
 		return 'http://' + link
-	if link[0:7] == 'mailto:' :
+	if link[0:7] == 'mailto:':
 		return None
 	if link[0:4] == 'tel:':
 		return None
@@ -102,7 +104,9 @@ def crawl_from_initial_url(url):
 
 				if norm_new_link != None:
 					links_queue.append(normalize_source_url(norm_new_link))
-					# print('adicionando a fila: ' + norm_new_link)
+					# print('adicionou ' + links_queue[-1])
+
+			# print('fim de processamento em ' + source_link + '\n\n')
 
 
 
