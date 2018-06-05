@@ -3,6 +3,20 @@ import React, { Component } from 'react';
 import './css/App.css';
 
 class App extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      links: []
+    };
+  }
+
+  componentDidMount() {
+    firebase.database().ref('urls').on('value')
+    .then(snap => console.log(snap.val()))
+    .catch(error => console.log('something gone wrong'));
+  }
+
   render() {
     return (
       <div className="App container-fluid">
