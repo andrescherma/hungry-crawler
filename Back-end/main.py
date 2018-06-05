@@ -5,7 +5,6 @@
 # 
 ###############################################################################
 
-
 import urllib2
 from urlparse import urlparse
 
@@ -38,20 +37,24 @@ def normalize_found_link(link, source_url):
 	parsed_url = urlparse(source_url)
 	domain = parsed_url[0] + '://' + parsed_url[1]
 
-	if link[0:7] == 'http://':
+	if link == None or len(link) <= 0:
+		return None
+	if len(link) >= 7 and link[0:7] == 'http://':
 		return link
-	if link[0:8] == 'https://':
+	if len(link) >= 8 and link[0:8] == 'https://':
 		return link
 	if link[0] == '/':
 		return domain + link
 	if link[0] == '#':
 		return domain + '/' + link
-	if link[0:3] == 'www':
+	if len(link) >= 3 and link[0:3] == 'www':
 		return 'http://' + link
-	if link[0:7] == 'mailto:':
+	if len(link) >= 7 and link[0:7] == 'mailto:':
 		return None
-	if link[0:4] == 'tel:':
+	if len(link) >= 4 and link[0:4] == 'tel:':
 		return None
+	if source_url not in link:
+		return domain + '/' + link
 	
 	return link
 
@@ -60,7 +63,7 @@ def normalize_source_url(url):
 	if url[-1] == '/':
 		return url[:-1]
 	else:
-		return url
+		return url		 
 
 
 def get_links_from_url(url):
@@ -71,11 +74,16 @@ def get_links_from_url(url):
 	try:
 		response = urllib2.urlopen(url)
 	except:
-		print('an Error')
+		print('an Error ocurred opening ' + url)
 
 	if response != None:
 		html = response.read()
-		parser.feed(html)
+		try:
+			html = html.decode('utf-8')
+			parser.feed(html)
+		except:
+			print('an error ocurred reading HTML from ' + url)
+
 
 	return parser.links
 
@@ -87,16 +95,18 @@ def crawl_from_initial_url(url):
 	norm_url = normalize_source_url(url)
 	links_queue.append(norm_url)
 
+	number = 0
+
 	while len(links_queue) > 0:
 		source_link = links_queue.pop(0)
-		# print('poped ' + source_link)
 
 		#source_link must be inserted on set like a string, so it can be verified if its
 		#value is already on the set
 		if str(source_link) not in processed_links:
-			print('processando ' + source_link)
+			number = number + 1
+			print(str(number) + ': processando ' + source_link)
+			
 			processed_links.add(str(source_link))
-			# print('procurando links em : ' + source_link)
 			gotten_links = get_links_from_url(source_link)
 
 			for new_link in gotten_links:
@@ -104,10 +114,8 @@ def crawl_from_initial_url(url):
 
 				if norm_new_link != None:
 					links_queue.append(normalize_source_url(norm_new_link))
-					# print('adicionou ' + links_queue[-1])
 
-			# print('fim de processamento em ' + source_link + '\n\n')
-
+	print('No more links on queue - how is it possible?')
 
 
 
@@ -117,5 +125,5 @@ firebase_admin.initialize_app(cred, {
 	'databaseURL': 'https://hungry-crawler-ascherma.firebaseio.com',
 })
 
-crawl_from_initial_url('http://www.ntsbrasil.com')
+crawl_from_initial_url('http://teamtreehouse.com')
 
