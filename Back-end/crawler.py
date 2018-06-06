@@ -125,5 +125,5 @@ firebase_admin.initialize_app(cred, {
 	'databaseURL': 'https://hungry-crawler-ascherma.firebaseio.com',
 })
 
-crawl_from_initial_url('http://teamtreehouse.com')
+# crawl_from_initial_url('http://teamtreehouse.com')
 
