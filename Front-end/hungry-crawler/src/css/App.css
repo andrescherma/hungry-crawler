@@ -2,8 +2,12 @@ body {
 	background-color: white;
 }
 
-.input-row {
+.header-row {
 	padding-top: 50px;
+	background-color: lightblue;
+}
+
+.input-row {
 	background-color: lightblue;
 }
 

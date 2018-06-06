@@ -1,30 +1,21 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
+import LinksList from './LinksList';
+
 import './css/App.css';
 
 class App extends Component {
-
-  constructor() {
-    super();
-    this.state = {
-      links: []
-    };
-  }
-
-  componentDidMount() {
-    firebase.database().ref('urls').on('value')
-    .then(snap => console.log(snap.val()))
-    .catch(error => console.log('something gone wrong'));
-  }
 
   render() {
     return (
       <div className="App container-fluid">
         
-        <div className="row input-row">
+        <header className="row header-row">
           <div className="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
             <h1>Hungry Crawler</h1>
           </div>
+        </header>
+
+        <div className="row input-row">
 
           <div className="input-box">
 
@@ -36,12 +27,7 @@ class App extends Component {
           </div>
         </div>
 
-        <div className="urls-list list-row">
-          <ul className="list-group col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-            <li className="list-group-item">link</li>
-            <li className="list-group-item">link</li>
-          </ul>
-        </div>
+        <LinksList />
         
       </div>
     );
