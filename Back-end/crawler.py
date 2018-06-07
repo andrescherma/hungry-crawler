@@ -105,7 +105,7 @@ def crawl_from_initial_url(url, searchKey):
 		if str(source_link) not in processed_links:
 			number = number + 1
 			print(str(number) + ': processando ' + source_link)
-			db.reference('urls/').push(value=source_link)
+			db.reference('urls/' + searchKey).push(value=source_link)
 			
 			processed_links.add(str(source_link))
 			gotten_links = get_links_from_url(source_link)
