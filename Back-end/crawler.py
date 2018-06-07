@@ -111,6 +111,7 @@ def crawl_from_initial_url(url):
 
 			for new_link in gotten_links:
 				norm_new_link = normalize_found_link(new_link, source_link)
+				#TODO: push new_norm_link to firebase properly
 
 				if norm_new_link != None:
 					links_queue.append(normalize_source_url(norm_new_link))
@@ -124,6 +125,4 @@ cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred, {
 	'databaseURL': 'https://hungry-crawler-ascherma.firebaseio.com',
 })
-
-# crawl_from_initial_url('http://teamtreehouse.com')
 
