@@ -63,7 +63,7 @@ def normalize_source_url(url):
 	if url[-1] == '/':
 		return url[:-1]
 	else:
-		return url		 
+		return url
 
 
 def get_links_from_url(url):
@@ -88,7 +88,7 @@ def get_links_from_url(url):
 	return parser.links
 
 
-def crawl_from_initial_url(url):
+def crawl_from_initial_url(url, searchKey):
 	processed_links = set()
 	links_queue = []
 
@@ -105,13 +105,13 @@ def crawl_from_initial_url(url):
 		if str(source_link) not in processed_links:
 			number = number + 1
 			print(str(number) + ': processando ' + source_link)
+			db.reference('urls/').push(value=source_link)
 			
 			processed_links.add(str(source_link))
 			gotten_links = get_links_from_url(source_link)
 
 			for new_link in gotten_links:
 				norm_new_link = normalize_found_link(new_link, source_link)
-				#TODO: push new_norm_link to firebase properly
 
 				if norm_new_link != None:
 					links_queue.append(normalize_source_url(norm_new_link))
