@@ -23,12 +23,16 @@ class LinksList extends Component {
     }
   }
 
-  componentDidUpdate () {
-    var searchKey = this.props.searchKey;
-    if (searchKey !== '') {
-      firebase.database().ref('urls/' + searchKey).on('value',
-        snap => this.updateLinks(snap.val())
-      );
+  componentDidUpdate (prevProps, prevState, snapshot) {
+
+    if (prevProps.searchKey !== this.props.searcKey){
+      firebase.database().ref('urls/' + prevProps.searchKey).off();
+
+      if (this.props.searchKey !== '') {
+        firebase.database().ref('urls/' + this.props.searchKey).on('value',
+          snap => this.updateLinks(snap.val())
+        );
+      }
     }
   }
 
