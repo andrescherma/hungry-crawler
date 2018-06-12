@@ -67,7 +67,6 @@ def normalize_source_url(url):
 
 
 def get_links_from_url(url):
-	# db.reference('urls/').push(url)
 	parser = LinkParser()
 
 	response = None
@@ -116,7 +115,7 @@ def crawl_from_initial_url(url, searchKey):
 				if norm_new_link != None:
 					links_queue.append(normalize_source_url(norm_new_link))
 
-	print('No more links on queue - how is it possible?')
+	print('No more links on queue - is this really possible?')
 
 
 
