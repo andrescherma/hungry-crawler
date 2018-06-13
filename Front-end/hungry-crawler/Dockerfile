@@ -21,4 +21,3 @@ CMD if [ ${APP_ENV} = production ]; \
 	fi
 
 EXPOSE 3000
-
