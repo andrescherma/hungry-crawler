@@ -24,7 +24,7 @@ class App extends Component {
     var xhr = new XMLHttpRequest();
 
     xhr.onload = this.handleCrawlResponse;
-    xhr.open("POST", 'http://localhost:8080/crawl', true);
+    xhr.open("POST", 'http://backend:8080/crawl', true);
     xhr.send(JSON.stringify({
         url: this.state.search,
     }));

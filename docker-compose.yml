@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  backend:
+    build: ./Back-end
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./Front-end
+      args:
+        app_env:production
+
+    ports:
+      - "3000:3000"

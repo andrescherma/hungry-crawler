@@ -6,7 +6,7 @@ ENV APP_ENV $app_env
 
 RUN mkdir -p /hungry-crawler
 WORKDIR /hungry-crawler
-COPY ./ ./
+COPY ./hungry-crawler ./hungry-crawler
 
 RUN npm install
 
